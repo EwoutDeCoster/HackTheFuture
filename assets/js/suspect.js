@@ -16,6 +16,12 @@ function getUrlVars() {
     return vars;
   }
 
+let susfactor = 0;
+
+function updateSus(amount) {
+    susfactor = susfactor + amount;
+}
+
 const myHeaders = new Headers();
 myHeaders.append("userId", "detwurrels402");
 
@@ -35,6 +41,7 @@ function getMotive(id) {
         if (result[i].suspectId == id) {
             console.log(result[i].text)
             document.getElementById("motive").innerHTML = result[i].text;
+            updateSus(3);
         }
         
 
@@ -46,18 +53,18 @@ function getMotive(id) {
     )
 }
 
-function getCar(id) {
-    fetch("https://htf-2021.zinderlabs.com/motive", requestOptions)
+function getCar(naam) {
+    fetch("https://htf-2021.zinderlabs.com/car", requestOptions)
   .then(response => response.json())
   .then(result => {
     let i = 0;
     console.log(result.length)
     while (i < result.length) {
-        if (result[i].suspectId == id) {
-            document.getElementById("motive").innerHTML = `${result[i].text}`;
-        }
-        else {
-            document.getElementById("motive").innerHTML = "Geen motief";
+        if (result[i].owner == naam) {
+            document.getElementById("licence").innerHTML = `${result[i].licenseplate}`;
+            document.getElementById("manu").innerHTML = `${result[i].manufacturer}`;
+            document.getElementById("type").innerHTML = `${result[i].type}`;
+            document.getElementById("colorr").innerHTML = `${result[i].color}`;
         }
         
 
@@ -80,6 +87,8 @@ function fetchProfiles() {
             document.getElementById("avatarr").insertAdjacentHTML("afterbegin", 
         `<div class="avatar" style="background-image:url(&quot;${result[i].imgSrc}&quot;);"></div>`
         );
+        document.getElementById("susname").innerHTML = result[i].name;
+        getCar(result[i].name)
         }
         
         
@@ -92,11 +101,15 @@ function fetchProfiles() {
     )
 }
 
-
+function calcSusFactor() {
+    document.getElementById("susfactor").innerHTML = susfactor;
+}
 
 const init = function() {
     fetchProfiles();
     getMotive(getUrlVars().suspect)
+    calcSusFactor();
+    
 }
 
 window.onload = init;
