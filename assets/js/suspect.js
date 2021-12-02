@@ -18,9 +18,6 @@ function getUrlVars() {
 
 let susfactor = 0;
 
-function updateSus(amount) {
-    susfactor = susfactor + amount;
-}
 
 const myHeaders = new Headers();
 myHeaders.append("userId", "detwurrels402");
@@ -36,16 +33,18 @@ function getMotive(id) {
   .then(response => response.json())
   .then(result => {
     let i = 0;
-    console.log(result.length)
     while (i < result.length) {
         if (result[i].suspectId == id) {
             console.log(result[i].text)
             document.getElementById("motive").innerHTML = result[i].text;
-            updateSus(3);
+            document.getElementById("susfactor").innerHTML = parseInt(document.getElementById("susfactor").innerHTML) + 5
         }
         
 
         i += 1;
+    }
+    if (document.getElementById("susfactor").innerHTML == 0) {
+        document.getElementById("susfactor").innerHTML = `${-3}`
     }
   }
       
@@ -58,13 +57,13 @@ function getCar(naam) {
   .then(response => response.json())
   .then(result => {
     let i = 0;
-    console.log(result.length)
     while (i < result.length) {
         if (result[i].owner == naam) {
             document.getElementById("licence").innerHTML = `${result[i].licenseplate}`;
             document.getElementById("manu").innerHTML = `${result[i].manufacturer}`;
             document.getElementById("type").innerHTML = `${result[i].type}`;
             document.getElementById("colorr").innerHTML = `${result[i].color}`;
+            getSighting(result[i].licenseplate);
         }
         
 
@@ -81,7 +80,6 @@ function fetchProfiles() {
   .then(response => response.json())
   .then(result => {
     let i = 0;
-    console.log(result.length)
     while (i < result.length) {
         if (result[i].id == getUrlVars().suspect) {
             document.getElementById("avatarr").insertAdjacentHTML("afterbegin", 
@@ -101,14 +99,92 @@ function fetchProfiles() {
     )
 }
 
-function calcSusFactor() {
-    document.getElementById("susfactor").innerHTML = susfactor;
+
+
+function getSighting(nummerplaat) {
+    fetch(`https://htf-2021.zinderlabs.com/sighting/car/${nummerplaat}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    let i = 0;
+    while (i < result.length) {
+        console.log(result[i].location)
+            document.getElementById("locationrow").insertAdjacentHTML("afterbegin",
+            `<div class="col-md-6">
+            <div class="contact-info portfolio-info-card">
+                <h2>${result[i].location} <p style="font-size: 17px;">${result[i].startTime} - ${result[i].endTime}</p></h2>
+                <div class="row">
+                    <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
+                    <div class="col-9"><span id="locdata"></span></div>
+                </div>
+            </div>
+        </div>`
+            )
+        let timee = result[i].endTime
+        let timestr = timee.substring(0,5).replace(":", "")
+        if (timestr > 1800 || timestr < 100) {
+            document.getElementById("susfactor").innerHTML = parseInt(document.getElementById("susfactor").innerHTML) -50
+        }
+        console.log(timestr)
+            fetch(`https://htf-2021.zinderlabs.com/location/${result[i].location}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+              document.getElementById("locdata").innerHTML = result.description
+                  
+          
+              }
+                
+              
+              )
+        
+
+        i += 1;
+    }
+  }
+      
+    
+    )
 }
+
+
+function testAlibi() {
+    fetch("https://htf-2021.zinderlabs.com/alibi/4ebcc5e8-a5ec-464a-a068-6adcd096bac5", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    let i = 0;
+    let verified = "Not verified";
+    let color = "red";
+    console.log(result)
+    while (i < result.length) {
+        if (result[i].verified) {
+            verified = "Verified";
+            color = "green";
+        }
+        document.getElementById("alibis").insertAdjacentHTML("afterbegin", 
+        `<div class="col-md-6">
+        <div class="contact-info portfolio-info-card">
+            <h2>Alibi ${i+1} <p style="font-size: 20px; color: ${color};">${verified}</p></h2>
+            <div class="row">
+                <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
+                <div class="col-9"><span>${result[i].description}</span></div>
+            </div>
+        </div>
+    </div>`
+        
+        )
+        i += 1;
+    }
+  }
+      
+    
+    )
+}
+
+
 
 const init = function() {
     fetchProfiles();
     getMotive(getUrlVars().suspect)
-    calcSusFactor();
+    testAlibi();
     
 }
 

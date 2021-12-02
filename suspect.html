@@ -25,7 +25,7 @@
             <div class="container" id=avatarr>
                 
                 <div class="about-me">
-                    <h1 style="font-size: 20px; font-weight: bold; text-decoration: underline;">Sus factor: <span id="susfactor"></span></h1>
+                    <h1 style="font-size: 20px; font-weight: bold; text-decoration: underline;">Sus factor: <span id="susfactor">0</span></h1>
                     <h3 style="font-size: 20px;">Motief:</h2>
                     <p id="motive">Geen motief!</p><a class="btn btn-outline-primary" role="button" href="index.html">Terug</a>
                 </div>
@@ -33,17 +33,17 @@
         </section>
         <section class="portfolio-block cv">
             <div class="container">
-                <div class="row">
+                <div class="row" style="display: flex !important; justify-content: center !important;">
                     <div class="col-md-6">
                         <div class="contact-info portfolio-info-card">
-                            <h2>Car</h2>
+                            <h2>Auto</h2>
                             <div class="row">
                                 <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
-                                <div class="col-9"><span><b>Licenseplate: </b></span><span id="licence">unknown</span></div>
+                                <div class="col-9"><span><b>Nummerplaat: </b></span><span id="licence">unknown</span></div>
                             </div>
                             <div class="row">
                                 <div class="col-1"><i class="icon ion-person icon"></i></div>
-                                <div class="col-9"><span><b>Manufacturer: </b></span><span id="manu">unknown</span></div>
+                                <div class="col-9"><span><b>Producent: </b></span><span id="manu">unknown</span></div>
                             </div>
                             <div class="row">
                                 <div class="col-1"><i class="icon ion-ios-telephone icon"></i></div>
@@ -51,11 +51,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-1"><i class="icon ion-at icon"></i></div>
-                                <div class="col-9"><span><b>Color: </b></span><span id="colorr">unknown</span></div>
+                                <div class="col-9"><span><b>Kleur: </b></span><span id="colorr">unknown</span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <!--<div class="col-md-6">
                         <div class="contact-info portfolio-info-card">
                             <h2>Contact Info</h2>
                             <div class="row">
@@ -75,14 +75,38 @@
                                 <div class="col-9"><span>lorem@email.com</span></div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="group"></div>
                 <div class="hobbies group">
                     <div class="heading">
-                        <h2 class="text-center">Hobbies</h2>
+                        <h2 class="text-center">Car Locations</h2>
                     </div>
-                    <p class="text-center text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras risus ligula, iaculis ut metus sit amet, luctus pharetra mauris. Aliquam purus felis, pretium vel pretium vitae, dapibus sodales ante. Suspendisse potenti. Duis nunc eros.</p>
+                    <div class="row" id="locationrow" style="display: flex; justify-content: center;">
+                        <!--<div class="col-md-6">
+                            <div class="contact-info portfolio-info-card">
+                                <h2>Location <p style="font-size: 20px;">time</p></h2>
+                                <div class="row">
+                                    <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
+                                    <div class="col-9"><span>info</span></div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="heading">
+                        <h2 style="margin-top: 20px;" class="text-center">Alibi</h2>
+                    </div>
+                    <div class="row" id="alibis" style="display: flex; justify-content: center;">
+                        <!--<div class="col-md-6">
+                            <div class="contact-info portfolio-info-card">
+                                <h2>Location <p style="font-size: 20px;">time</p></h2>
+                                <div class="row">
+                                    <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
+                                    <div class="col-9"><span>info</span></div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
                 </div>
             </div>
         </section>
