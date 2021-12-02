@@ -33,6 +33,27 @@ function getMotive(id) {
     console.log(result.length)
     while (i < result.length) {
         if (result[i].suspectId == id) {
+            console.log(result[i].text)
+            document.getElementById("motive").innerHTML = result[i].text;
+        }
+        
+
+        i += 1;
+    }
+  }
+      
+    
+    )
+}
+
+function getCar(id) {
+    fetch("https://htf-2021.zinderlabs.com/motive", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    let i = 0;
+    console.log(result.length)
+    while (i < result.length) {
+        if (result[i].suspectId == id) {
             document.getElementById("motive").innerHTML = `${result[i].text}`;
         }
         else {
