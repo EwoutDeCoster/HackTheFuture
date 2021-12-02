@@ -35,7 +35,6 @@ function getMotive(id) {
     let i = 0;
     while (i < result.length) {
         if (result[i].suspectId == id) {
-            console.log(result[i].text)
             document.getElementById("motive").innerHTML = result[i].text;
             document.getElementById("susfactor").innerHTML = parseInt(document.getElementById("susfactor").innerHTML) + 5
         }
@@ -107,7 +106,6 @@ function getSighting(nummerplaat) {
   .then(result => {
     let i = 0;
     while (i < result.length) {
-        console.log(result[i].location)
             document.getElementById("locationrow").insertAdjacentHTML("afterbegin",
             `<div class="col-md-6">
             <div class="contact-info portfolio-info-card">
@@ -124,7 +122,6 @@ function getSighting(nummerplaat) {
         if (timestr > 1800 || timestr < 100) {
             document.getElementById("susfactor").innerHTML = parseInt(document.getElementById("susfactor").innerHTML) -50
         }
-        console.log(timestr)
             fetch(`https://htf-2021.zinderlabs.com/location/${result[i].location}`, requestOptions)
             .then(response => response.json())
             .then(result => {
@@ -144,6 +141,31 @@ function getSighting(nummerplaat) {
     
     )
 }
+function getSubjectSighting(id) {
+    fetch(`https://htf-2021.zinderlabs.com/sighting/suspect/${id}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    let i = 0;
+    console.log(result)
+    while (i < result.length) {
+        if (result[i].location == "traphal") {
+            document.getElementById("locationsubjectrow").insertAdjacentHTML("afterbegin", 
+            `<div class="col-md-6">
+            <div class="contact-info portfolio-info-card">
+                <h2>${result[i].location} <p style="font-size: 17px;">${result[i].startTime} - ${result[i].endTime}</p></h2>
+            </div>
+        </div>`
+            )
+        }
+
+
+        i += 1;
+    }
+  }
+      
+    
+    )
+}
 
 
 function testAlibi() {
@@ -153,7 +175,6 @@ function testAlibi() {
     let i = 0;
     let verified = "Not verified";
     let color = "red";
-    console.log(result)
     while (i < result.length) {
         if (result[i].verified) {
             verified = "Verified";
@@ -179,12 +200,32 @@ function testAlibi() {
     )
 }
 
+function checkFingerPrints() {
+    fetch("https://htf-2021.zinderlabs.com/fingerprint/Insulinespuit", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    let i = 0;
+    while (i < result.fingerprints.length) {
+        if (result.fingerprints[i] == getUrlVars().suspect) {
+            document.getElementById("susfactor").innerHTML = parseInt(document.getElementById("susfactor").innerHTML) + 20;
+        }
+        
+        i += 1;
+    }
+  }
+      
+    
+    )
+}
+
 
 
 const init = function() {
     fetchProfiles();
-    getMotive(getUrlVars().suspect)
+    getMotive(getUrlVars().suspect);
     testAlibi();
+    getSubjectSighting(getUrlVars().suspect);
+    checkFingerPrints();
     
 }
 
