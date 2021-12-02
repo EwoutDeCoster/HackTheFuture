@@ -168,8 +168,8 @@ function getSubjectSighting(id) {
 }
 
 
-function testAlibi() {
-    fetch("https://htf-2021.zinderlabs.com/alibi/4ebcc5e8-a5ec-464a-a068-6adcd096bac5", requestOptions)
+function testAlibi(id) {
+    fetch(`https://htf-2021.zinderlabs.com/alibi/${id}`, requestOptions)
   .then(response => response.json())
   .then(result => {
     let i = 0;
@@ -223,7 +223,7 @@ function checkFingerPrints() {
 const init = function() {
     fetchProfiles();
     getMotive(getUrlVars().suspect);
-    testAlibi();
+    testAlibi(getUrlVars().suspect);
     getSubjectSighting(getUrlVars().suspect);
     checkFingerPrints();
     
